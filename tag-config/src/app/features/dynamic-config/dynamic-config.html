@@ -1,75 +1,90 @@
 <section class="dynamic-config">
-  <h1>Configuração</h1>
+  <header class="dynamic-config__header">
+    <h1 class="dynamic-config__title">Configuração</h1>
+    <p class="dynamic-config__subtitle">Escolha um gateway para ver os campos de configuração.</p>
+  </header>
 
-  <h2>Gateways disponíveis</h2>
+  <div class="dynamic-config__layout">
+    <section class="dynamic-config__panel">
+      <h2 class="dynamic-config__panel-title">Gateways disponíveis</h2>
 
-  @switch (pluginStatus()) {
-    @case ('carregando') {
-      <mat-progress-bar mode="indeterminate" aria-label="Carregando gateways" />
-    }
-    @case ('erro') {
-      <p role="alert">Não foi possível carregar os gateways.</p>
-    }
-    @case ('pronto') {
-      <mat-action-list>
-        @for (plugin of plugins(); track plugin.id) {
-          <button
-            mat-list-item
-            [class.dynamic-config__plugin--selected]="plugin.id === selectedPlugin()?.id"
-            (click)="selectPlugin(plugin)"
-          >
-            {{ plugin.name }}
-          </button>
-        } @empty {
-          <p>Nenhum gateway disponível.</p>
+      @switch (pluginStatus()) {
+        @case ('carregando') {
+          <mat-progress-bar mode="indeterminate" aria-label="Carregando gateways" />
         }
-      </mat-action-list>
-
-      @if (!selectedPlugin()) {
-        <p>Selecione um gateway para configurar.</p>
+        @case ('erro') {
+          <p class="dynamic-config__message dynamic-config__message--error" role="alert">
+            Não foi possível carregar os gateways.
+          </p>
+        }
+        @case ('pronto') {
+          <mat-action-list class="dynamic-config__list">
+            @for (plugin of plugins(); track plugin.id) {
+              <button
+                mat-list-item
+                class="dynamic-config__plugin"
+                [class.dynamic-config__plugin--selected]="plugin.id === selectedPlugin()?.id"
+                (click)="selectPlugin(plugin)"
+              >
+                {{ plugin.name }}
+              </button>
+            } @empty {
+              <p class="dynamic-config__message">Nenhum gateway disponível.</p>
+            }
+          </mat-action-list>
+        }
       }
-    }
-  }
+    </section>
 
-  @if (selectedPlugin(); as plugin) {
-    <h2>Configuração: {{ plugin.name }}</h2>
+    @if (plugins().length > 0) {
+      <section class="dynamic-config__panel">
+        @if (selectedPlugin(); as plugin) {
+          <h2 class="dynamic-config__panel-title">Configuração: {{ plugin.name }}</h2>
 
-    @switch (attributeStatus()) {
-      @case ('carregando') {
-        <mat-progress-bar mode="indeterminate" aria-label="Carregando atributos" />
-      }
-      @case ('erro') {
-        <p role="alert">Não foi possível carregar os atributos. Clique no gateway para tentar de novo.</p>
-      }
-      @case ('pronto') {
-        <form class="dynamic-config__form" [formGroup]="form()">
-          @for (attribute of attributes(); track attribute.name) {
-            @switch (attribute.type) {
-              @case ('url') {
-                <mat-form-field>
-                  <mat-label>{{ attribute.name }}</mat-label>
-                  <input matInput type="url" [formControlName]="attribute.name" />
-                </mat-form-field>
-              }
-              @case ('select') {
-                <mat-form-field>
-                  <mat-label>{{ attribute.name }}</mat-label>
-                  <mat-select [formControlName]="attribute.name">
-                    @for (value of attribute.values; track value) {
-                      <mat-option [value]="value">{{ value }}</mat-option>
+          @switch (attributeStatus()) {
+            @case ('carregando') {
+              <mat-progress-bar mode="indeterminate" aria-label="Carregando atributos" />
+            }
+            @case ('erro') {
+              <p class="dynamic-config__message dynamic-config__message--error" role="alert">
+                Não foi possível carregar os atributos. Clique no gateway para tentar de novo.
+              </p>
+            }
+            @case ('pronto') {
+              <form class="dynamic-config__form" [formGroup]="form()">
+                @for (attribute of attributes(); track attribute.name) {
+                  @switch (attribute.type) {
+                    @case ('url') {
+                      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-label>{{ attribute.name }}</mat-label>
+                        <input matInput type="url" [formControlName]="attribute.name" />
+                      </mat-form-field>
                     }
-                  </mat-select>
-                </mat-form-field>
-              }
-              @default {
-                <p role="alert">
-                  O campo "{{ attribute.name }}" usa o tipo "{{ attribute.type }}", ainda não suportado.
-                </p>
-              }
+                    @case ('select') {
+                      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                        <mat-label>{{ attribute.name }}</mat-label>
+                        <mat-select [formControlName]="attribute.name">
+                          @for (value of attribute.values; track value) {
+                            <mat-option [value]="value">{{ value }}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    }
+                    @default {
+                      <p class="dynamic-config__message dynamic-config__message--warning" role="alert">
+                        O campo "{{ attribute.name }}" usa o tipo "{{ attribute.type }}", ainda não
+                        suportado.
+                      </p>
+                    }
+                  }
+                }
+              </form>
             }
           }
-        </form>
-      }
+        } @else {
+          <p class="dynamic-config__empty">Selecione um gateway para configurar.</p>
+        }
+      </section>
     }
-  }
+  </div>
 </section>
