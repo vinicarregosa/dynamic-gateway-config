@@ -1,0 +1,56 @@
+:root {
+  --portal-bg: #faf9fd;
+  --portal-surface: #ffffff;
+  --portal-text: #1a1b1f;
+  --portal-muted: #44474f;
+  --portal-border: #e3e2e6;
+  --portal-accent: #d7e3f8;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--portal-bg);
+  color: var(--portal-text);
+  font-family: Roboto, sans-serif;
+}
+
+.portal-header {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--portal-border);
+  background-color: var(--portal-surface);
+}
+
+.portal-header__brand {
+  font-size: 18px;
+}
+
+.portal-header__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.portal-header__nav button {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--portal-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.portal-header__nav button[aria-current='true'] {
+  background-color: var(--portal-accent);
+  color: var(--portal-text);
+}
+
+.portal-message {
+  max-width: 880px;
+  margin: 56px auto;
+  padding: 0 16px;
+  color: var(--portal-muted);
+}
