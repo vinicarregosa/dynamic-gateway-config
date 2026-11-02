@@ -20,6 +20,4 @@ export class PluginService {
         .pipe(map((response) => response.attributes));
     } 
     
-
-
 }
