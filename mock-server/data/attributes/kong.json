@@ -1,0 +1,22 @@
+{
+
+    "attributes": [
+        {
+            "name": "endpoint","type": "url",  "values": [], "default": ""
+
+        },
+
+        {
+
+            "name": "environment",
+            "type": "select",
+            "values": ["development", "production"],
+            "default": "development"
+
+        }
+
+    ]
+
+
+
+}

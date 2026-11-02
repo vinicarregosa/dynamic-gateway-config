@@ -1,0 +1,22 @@
+{
+
+    "attributes": [
+        {
+            "name": "adminPortal","type": "url",  "values": [], "default": ""
+
+        },
+
+        {
+
+            "name": "deployment",
+            "type": "select",
+            "values": ["hosted", "self-managed"],
+            "default": "hosted"
+
+        }
+
+    ]
+
+
+
+}
