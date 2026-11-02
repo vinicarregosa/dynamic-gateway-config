@@ -15,7 +15,7 @@
         @for (plugin of plugins(); track plugin.id) {
           <button
             mat-list-item
-            [activated]="plugin.id === selectedPlugin()?.id"
+            [class.dynamic-config__plugin--selected]="plugin.id === selectedPlugin()?.id"
             (click)="selectPlugin(plugin)"
           >
             {{ plugin.name }}
@@ -27,6 +27,48 @@
 
       @if (!selectedPlugin()) {
         <p>Selecione um gateway para configurar.</p>
+      }
+    }
+  }
+
+  @if (selectedPlugin(); as plugin) {
+    <h2>Configuração: {{ plugin.name }}</h2>
+
+    @switch (attributeStatus()) {
+      @case ('carregando') {
+        <mat-progress-bar mode="indeterminate" aria-label="Carregando atributos" />
+      }
+      @case ('erro') {
+        <p role="alert">Não foi possível carregar os atributos. Clique no gateway para tentar de novo.</p>
+      }
+      @case ('pronto') {
+        <form class="dynamic-config__form" [formGroup]="form()">
+          @for (attribute of attributes(); track attribute.name) {
+            @switch (attribute.type) {
+              @case ('url') {
+                <mat-form-field>
+                  <mat-label>{{ attribute.name }}</mat-label>
+                  <input matInput type="url" [formControlName]="attribute.name" />
+                </mat-form-field>
+              }
+              @case ('select') {
+                <mat-form-field>
+                  <mat-label>{{ attribute.name }}</mat-label>
+                  <mat-select [formControlName]="attribute.name">
+                    @for (value of attribute.values; track value) {
+                      <mat-option [value]="value">{{ value }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
+              @default {
+                <p role="alert">
+                  O campo "{{ attribute.name }}" usa o tipo "{{ attribute.type }}", ainda não suportado.
+                </p>
+              }
+            }
+          }
+        </form>
       }
     }
   }

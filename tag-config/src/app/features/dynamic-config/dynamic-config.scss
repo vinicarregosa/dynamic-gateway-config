@@ -1,5 +1,15 @@
 .dynamic-config {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 24px 16px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.dynamic-config__form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dynamic-config__plugin--selected {
+  background-color: var(--mat-sys-secondary-container);
 }
