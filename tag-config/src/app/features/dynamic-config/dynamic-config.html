@@ -1,0 +1,33 @@
+<section class="dynamic-config">
+  <h1>Configuração</h1>
+
+  <h2>Gateways disponíveis</h2>
+
+  @switch (pluginStatus()) {
+    @case ('carregando') {
+      <mat-progress-bar mode="indeterminate" aria-label="Carregando gateways" />
+    }
+    @case ('erro') {
+      <p role="alert">Não foi possível carregar os gateways.</p>
+    }
+    @case ('pronto') {
+      <mat-action-list>
+        @for (plugin of plugins(); track plugin.id) {
+          <button
+            mat-list-item
+            [activated]="plugin.id === selectedPlugin()?.id"
+            (click)="selectPlugin(plugin)"
+          >
+            {{ plugin.name }}
+          </button>
+        } @empty {
+          <p>Nenhum gateway disponível.</p>
+        }
+      </mat-action-list>
+
+      @if (!selectedPlugin()) {
+        <p>Selecione um gateway para configurar.</p>
+      }
+    }
+  }
+</section>
