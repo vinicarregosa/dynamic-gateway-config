@@ -20,7 +20,8 @@ describe('App', () => {
   it('mostra a tela de configuracao', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Configuração');
+    const shadowRoot = (fixture.nativeElement as HTMLElement).shadowRoot;
+    expect(shadowRoot?.querySelector('h1')?.textContent).toContain('Configuração');
+
   });
 });
