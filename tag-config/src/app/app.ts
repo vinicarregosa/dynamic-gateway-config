@@ -5,7 +5,7 @@ import { DynamicConfig } from './features/dynamic-config/dynamic-config';
   selector: 'app-root',
   imports: [DynamicConfig],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+  styleUrl: './app.css',
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class App {}

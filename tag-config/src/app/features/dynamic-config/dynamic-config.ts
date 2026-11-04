@@ -24,7 +24,7 @@ type LoadStatus = 'aguardando' | 'carregando' | 'pronto' | 'erro';
     ReactiveFormsModule,
   ],
   templateUrl: './dynamic-config.html',
-  styleUrl: './dynamic-config.scss',
+  styleUrl: './dynamic-config.css',
 })
 export class DynamicConfig {
   private readonly pluginService = inject(PluginService);
