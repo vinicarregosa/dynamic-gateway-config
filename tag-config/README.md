@@ -1,59 +1,35 @@
-# TagConfig
+# tag-config
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.27.
+Micro-frontend Angular que desenha a tela de configuração de gateways e a expõe como o Web Component `<tag-config>`.
 
-## Development server
+Gerado com [Angular CLI](https://github.com/angular/angular-cli) 21.
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Comandos
 
 ```bash
-ng generate component component-name
+npm install
+npm start                      # servidor de desenvolvimento em http://localhost:4202
+npm run build                  # build de produção em dist/tag-config/browser/
+npx ng test --watch=false      # testes unitários, uma execução
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+A página `http://localhost:4202` mostra a tela sozinha, com a tag `<tag-config>` em `src/index.html`. Para ver a tela dentro do Portal, consulte o [README da raiz](../README.md).
 
-```bash
-ng generate --help
+A tela espera a API em `http://localhost:3001` (constante `API_URL` em `src/app/features/dynamic-config/plugin.service.ts`), que o `mock-server/` oferece.
+
+## Estrutura
+
+```text
+src/
+├── main.ts                                   registra o Custom Element <tag-config>
+├── index.html                                página para rodar a tela sozinha
+└── app/
+    ├── app.ts                                casca: tema e Shadow DOM
+    ├── app.config.ts                         providers globais (HttpClient)
+    └── features/dynamic-config/
+        ├── dynamic-config.ts / .html / .css  componente da tela
+        ├── plugin.model.ts                   tipos Plugin e PluginAttribute
+        └── plugin.service.ts                 chamadas à API
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+O build gera `main.js` sem hash no nome (`outputHashing: "none"`), para que o Portal tenha um endereço estável. Os detalhes estão em [docs/06-web-component.md](../docs/06-web-component.md).

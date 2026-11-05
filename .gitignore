@@ -1,0 +1,16 @@
+# Dependências e saídas de build
+node_modules/
+dist/
+.angular/
+
+# Variáveis de ambiente e logs
+.env
+.env.*
+*.log
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+
+# Material local, fora do repositório
+_local/
